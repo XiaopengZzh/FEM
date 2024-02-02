@@ -1,0 +1,200 @@
+\chapter{Laplace Equation}
+	
+	\section{Derivation of Canonical form}
+	
+	Any second order linear PDE in two variables can be represented as the form 
+	
+	\begin{equation}
+		Au_{xx} + 2Bu_{xy} + Cu_{yy} + Du_x + Eu_y + Fu = f
+		\label{second order linear PDE}
+	\end{equation}
+	
+	We could derive the canonical form thus simplify the equation by canceling the cross term or muting the coefficients of two second order terms(which are equivalent by simple variable substitution).
+	
+	Consider variable substitution $\xi = \xi(x, y)$, $\eta = \eta(x, y)$. We assume $\frac{D(\xi, \eta)}{D(x, y)} = \begin{vmatrix}
+		\xi_x & \xi_y \\
+		\eta_x & \eta_y
+	\end{vmatrix} \neq 0 $ in the neighborhood of some $(x_0, y_0)$, thus the variable substitution is invertible according the implicit function theorem.
+	
+	We have 
+	\begin{equation}
+		au_{\xi \xi} + 2bu_{\xi \eta} + cu_{\eta \eta} + du_{\xi} + eu_{\eta} + fu = g
+		\label{common PDE with variable substitution}
+	\end{equation}
+	
+	with the following relations.
+	$$\begin{cases}
+		u_x = u_{\xi}\xi_x + u_{\eta}\eta_x\\
+		u_y = u_{\xi}\xi_y + u_{\eta}\eta_y\\
+		u_{xx} = u_{\xi\xi}\xi_x^2 + 2u_{\xi\eta}\xi_x\eta_x + u_{\eta\eta}\eta_x^2 + u_{\xi}\xi_{xx} + u_{\eta}\eta_{xx}\\
+		u_{xy} = u_{\xi\xi}\xi_x\xi_y + u_{\xi\eta}(\xi_x\eta_y + \xi_y\eta_x) + u_{\eta\eta}\eta_x\eta_y + u_{\xi}\xi_{xy} + u_{\eta}\eta{xy}\\
+		u_{yy} = u_{\xi\xi}\xi_y^2 + 2u_{\xi\eta}\xi_y\eta_y + u_{\eta\eta}\eta_y^2 + u_{\xi}\xi_{yy} + u_{\eta}\eta_{yy}
+	\end{cases}$$
+	
+	One might think of writing for example $u_{\xi}$ as some other $v_{\xi}$ since when substituting variables, the function $u(x, y)$ itself has changed to another $v(\xi, \eta)$, but in the field of PDE, we simply write $v(\xi, \eta)$ still as $u(\xi, \eta)$ to imply that they are nothing different but variable substitution.
+	
+	The coefficients $a$, $b$ and $c$ can be determined from the relations as
+	
+	$$\begin{cases}
+		a = A\xi_x^2 + 2B\xi_{x}\xi_y + C\xi_y^2\\
+		b = A\xi_x\eta_x + B(\xi_x\eta_y + \xi_y\eta_x) + C\xi_y\eta_x\\
+		c = A\eta_x^2 + 2B\eta_x\eta_y + C\eta_y^2
+	\end{cases}$$
+	
+	 Note that representations of $a$ and $c$ are quite similar, if we could eliminate them from the equation, the simplification is done followed by one more simple variable substitution. 
+	 
+	 Consider first-order linear PDE 
+	 
+	 \begin{equation}
+	 	A\varphi_x^2 + 2B\varphi_x\varphi_y + C\varphi_y^2 = 0
+	 	\label{c1 characteristics}
+	 \end{equation}
+	 
+	 If there exist two independent solution $\varphi = \varphi_1(x, y)$, $\varphi = \varphi_2(x, y)$, we can eliminate $a$ and $c$ by applying
+	 $\begin{cases}
+	 	\xi = \varphi_1(x, y)\\
+	 	\eta = \varphi_2(x, y)
+	 \end{cases}$\\
+	
+	A common way to solve first-order linear PDE is characteristic method. Our aim is to derive $\varphi(x, y)$, but instead of directly solving the equation, we consider a special curve on the $xOy$ plane 
+	
+	\begin{equation}
+		\Gamma : \varphi(x, y) = 0
+		\label{c1 characteristics curve}
+	\end{equation}
+	
+	If we combine \eqref{c1 characteristics} and \eqref{c1 characteristics curve} as a system, we could find the relation between $x$ and $y$ by the implicit function theorem thus $\varphi(x, y)$ can be found. Since $\frac{dy}{dx} = -\frac{\varphi_x}{\varphi_y}$, plug it into \eqref{c1 characteristics curve}, we have 
+	\begin{equation}
+		A(\frac{dy}{dx})^2 - 2B\frac{dy}{dx} + C = 0
+		\label{characteristics temp1}
+	\end{equation}
+	
+	There exist the following three circumstances.
+	
+	\textbf{(1)}. $\Delta = B^2 - AC > 0$, then two curves satisfy the aforementioned equation system, $(B + \Delta)x - Ay = 0$ and $(B - \Delta)x - Ay = 0$, which are the two independent solutions of \eqref{c1 characteristics curve}. Therefore, the variable substitution are $\xi = (B + \Delta)x - Ay$ and $\eta = (B - \Delta)x - Ay$
+	
+	Now equation \eqref{common PDE with variable substitution} is changed to be 
+	
+	\begin{equation}
+		u_{\xi\eta} = A_1u_{\xi} + B_1u_{\eta} + C_1u + D
+		\label{c1 hyperbolic temp1}
+	\end{equation}
+	
+	With another variable substitution
+	
+	\begin{center}
+		$\xi =\frac{1}{2}(s + t) $, $\eta = \frac{1}{2}(s - t)$
+	\end{center}
+	
+	\eqref{c1 hyperbolic temp1} becomes $u_{ss} - u_{tt} = A_2u_s + B_2u_t + C_1u + D_1$\\
+	
+	PDEs in this form are called hyperbolic PDEs. This is because the quadratic form $Q(x, y) = Ax^2 + 2Bxy + Cy^2 = 1$ is a hyperbola when $B^2 - AC > 0$\\
+	
+	\textbf{(2)}. $\Delta = B^2 - AC < 0$, then \eqref{characteristics temp1} has only complex solutions thus we cannot find two independent real solutions of $\varphi$.(the variable substitution of $\xi = \xi(x, y)$, $\eta = \eta(x, y)$ urges the solutions to be real)
+	
+	We should find yet another method. Let's assume that we have found the variable substitution $\xi = \xi(x, y)$ and $\eta = \eta(x, y)$ such that for example $a = c$ and $b = 0$.
+	
+	Consider function $\phi = \xi + i\eta$. Since $\phi_x = \xi_x + i\eta_x$, $\phi_y = \xi_y + i\eta_y$, we have 
+	\begin{align*}
+		A\phi_x^2 + 2B\phi_x\phi_y + C\phi_y^2 &= A(\xi_x^2 - \eta_x^2) + 2B(\xi_x\xi_y - \eta_x\eta_y) + C(\xi_y^2 - \eta_y^2) \\
+		&+ i(2A\xi_x\eta_x + 2B(\xi_x\eta_y + \xi_y\eta_x) + 2C\xi_y\eta_y\\
+		&= a - c + i\cdot 2b\\
+		&= 0
+	\end{align*}
+	
+	This means whenever we find a complex solution $\phi(x, y)$ that satisfy \eqref{c1 characteristics} , we can recover $\xi$ and $\eta$ with the transformation $\xi = Re\phi$ and $\eta = Im\phi$. Since $\xi$ and $\eta$ satisfy $a -c = 0$ and $b = 0$, so with a change of variables from $x$ and $y$ to $\xi$ and $\eta$ will transform the PDE \eqref{second order linear PDE} into canonical form 
+	\begin{equation}
+		u_{\xi\xi} + u_{\eta\eta} + \text{(lower-order terms)}
+		\label{c1 elliptic PDE}
+	\end{equation}
+	
+	PDEs as the form of \eqref{c1 elliptic PDE} are called elliptic PDEs. Consider quadratic form $Q(x, y) = Ax^2 + 2Bxy + Cy^2 = 1 $, with simple calculation we can find that it is centered around the origin and any line passing through the origin will have two intersections with the curve of the quadratic form. In fact it is a ellipse so we call this type of PDEs as elliptic PDEs.\\
+	
+	\textbf{(3)}. $\Delta = B^2 - AC = 0$, we can write $(1.3)$ as $(\sqrt{A}\xi_x + \sqrt{C}\xi_y)^2 = 0$. Therefore we have only one bundle of characteristics, name it as $\varphi_1(x, y) = c_1$. We set $\xi = \varphi_1(x, y)$ so $a = 0$. Furthermore, since $\Delta = 0$, we have 
+	
+	\begin{align*}
+	b &= A\xi_x\eta_x + B(\xi_x\eta_y + \xi_y\eta_x) + C\xi_y\eta_y\\
+	&= (\sqrt{A}\xi_x + \sqrt{C}\xi_y)(\sqrt{A}\eta_x + \sqrt{C}\eta_y) = 0	
+	\end{align*}
+
+	Since both $a$ and $c$ are 0, we choose any $\eta = \varphi_2(x, y)$ that independent from $\varphi_1$, then with simple calculation, \eqref{second order linear PDE} can be transformed as canonical form
+	\begin{equation}
+		u_{\eta\eta} = A_2u_{\xi} + B_2u_{\eta} + C_2u + D_2
+		\label{canonical of parabolic equation}
+	\end{equation}
+	
+	PDEs as the form of \eqref{canonical of parabolic equation} are called parabolic PDEs. The name parabola is used because the assumption on the coefficients are the same as the condition for analytic geometry equation $Ax^2 + 2Bxy + Cy^2 + Dx + Ey + F = 0$ to define a planar parabola.
+	
+	\section{Discretization of the Laplace Equation}
+	
+	The Laplace equation is a elliptic PDE. In physical applications, it could be used to illustrate the equilibrium temperature or concentration of some chemical. In two dimensions, it is represented as
+	\begin{equation}
+		\Delta u = \frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} = f(x, y)
+		\label{Laplace Equation}
+	\end{equation}
+	
+	The function $f$ is called the source term or inhomogeneous term or forcing function. \eqref{second order linear PDE} is supposed to be satisfied for every point in the interior of domain $\Omega$. Here for simplicity, we set $\Omega$ to be $\{(x, y) | 0 < x < s, 0 < y < t\}$
+	
+	In terms of boundary conditions, we treat only the Dirichlet boundary, which is given by 
+	\begin{equation}
+		u(x, y) = g(x, y) \quad \text{ on } \Gamma \text{ or } \partial \Omega
+	\end{equation}
+	
+	Discretization means we think of the equation holding at finite discrete points on domain $\Omega$ and only solve finite number of equations, unlike the original problem, where the equation holds on infinite number of interior points and the number of values to be solved are also infinite.
+	
+	Finite difference refers to approximation to derivatives, such as $$v^{'}(x) \approx \frac{v(x + \Delta x) - v(x)}{\Delta x}$$ $$v^{''}(x) \approx \frac{v(x + \Delta x) - 2v(x) + v(x - \Delta x)}{\Delta x^2}$$
+	
+	Applying such operation to the Laplace equation yields
+	\begin{equation}
+	\begin{split}
+		f = \Delta u(x, y) \approx & \frac{u(x + \Delta x, y) - 2u(x, y) + u(x - \Delta x, y)}{\Delta x^2}\\
+		& + \frac{u(x, y + \Delta y) - 2u(x, y) + u(x, y - \Delta y)}{\Delta y^2}
+	\end{split}
+	\label{FDM of Laplace Equation}
+	\end{equation}
+	
+	We create a grid of points in the interior with uniform spacing $\Delta x$ and $\Delta y$
+	$$0 = x_0 < x_1 < x_2 < ... < x_n < x_{n+1} = s\text{,} \quad x_{i + 1} - x_i = \Delta x\text{,} \quad \forall 0 < i < n $$
+	$$0 = y_0 < y_1 < y_2 < ... < y_n < y_{n+1} = t\text{,} \quad y_{j + 1} - y_j = \Delta y\text{,} \quad \forall 0 < j < n $$
+	
+	There is a grid of $n^2$ points where the finite difference approximation can be applied. We write $U_{jk} \approx u(x_j, y_k)$ as the to be solved approximate values of underlying values $u(x_j, y_k)$. Similar to \eqref{FDM of Laplace Equation} where $u$ should satisfy \eqref{Laplace Equation} at grid points but using the finite different approximation, we give the following equation as approximation.
+	\begin{equation}
+		\frac{U_{j + 1, k} - 2U_{jk} + U_{j - 1, k}}{\Delta x^2} + \frac{U_{j, k+ 1} - 2U_{j, k} + U_{j, k - 1}}{\Delta y^2} = f_{j, k}
+		\label{FDM equation}
+	\end{equation}
+	
+	If we write the above equation as the form
+	
+	\begin{equation}
+		(\frac{2}{\Delta x^2} + \frac{2}{\Delta y^2})U_{j, k} - (\frac{U_{j + 1, k} + U_{j - 1, k}}{\Delta x^2} + \frac{U_{j, k + 1} + U_{j, k - 1}}{\Delta y^2}) = -f_{j, k}
+	\end{equation}
+	
+	This implies the Laplace equation is roughly about the average since if $f = 0$, $U_{j, k}$ depicts the average.
+	
+	The boundary values are given their exact known values.
+	\begin{align*}
+		U_{0k} = u(0, y_k) &= g(0, y_k)\\
+		U_{n + 1, k} = u(x_{n + 1}, y_k) &= g(1, y_k)\\
+		U_{j, 0} = u(0, y_k) &= g(0, y_k)\\
+		U_{j, n + 1} = u(x_{n + 1}, y_k) &= g(1, y_k)
+	\end{align*}
+	
+	There are $n^2$ equations \eqref{FDM equation}, one for each interior grid point. There are also $n^2$ unknowns $U_{j, k}$. Thus the finite difference equations \eqref{FDM equation} are a system of linear equations. If the corresponding matrix is non-singular, then there is a unique solution $U$, which is the finite difference approximation to $u$.
+	
+	
+	\section{Variational principle}
+	
+	\section{Gauss Seidel Method}
+	
+	Gauss Seidel method computes a sequence of iterates, $U^{(1)}, U^{(2)}, ..., U^{(k)}, ...$ It's derived from fixed point iteration $u_{n + 1} = (I - Q^{-1}A)u_{n} + Q^{-1}F$, where $Q$ is selected to be $Q = D + L$ so that the iteration becomes $(D+L)u_{n + 1} = A_u\cdot u_n + F$. $A_n$ is the upper triangular part of $A$. By component-wise, $$\sum_{i < j}a_{ji}U_i^{(k + 1)} + a_{jj}U_j^{(k + 1)} = b_j - \sum_{i >j}a_{ji}U_i^{(k)}$$
+	
+	To compute $j$th component of $U^{(k + 1)}$, we have 
+	\begin{equation}
+		U_{j}^{(k + 1)} = \frac{1}{a_{jj}}(F_j - \sum_{i < j}a_{ji}U_i^{(k + 1)} - \sum_{i > j}a_{ji}U_i^{(k)})
+	\end{equation}
+	
+	The first sum involves the components of $U^{(k + 1)}$ that have already been computed. The second sum involves components of $U^{(k)}$ that have not yet been updates
+
+	
+
+
