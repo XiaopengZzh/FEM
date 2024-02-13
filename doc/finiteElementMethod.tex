@@ -1,0 +1,17 @@
+\chapter{Finite Element Methods}
+
+Finite element methods are commonly used to solve elliptic PDEs for their geometric flexibility and ability to handle PDEs. The differences between FEM and FDM are :
+
+\begin{itemize}
+	\item The most attractive feature of FEM is its ability to handle complicated geometries(boundaries). FDM is restricted to handle rectangular shapes and simple alterations.
+	\item The most attractive feature of FDM is that it is straightforward to implement.
+	\item One could consider FDM a particular case of FEM approach.
+\end{itemize}
+
+We start with introducing some common definitions in FEM.
+
+A \emph{triangle} consists of the \emph{interior}, the \emph{edges} and the \emph{vertices}. An edge connects each pair of vertices. The edge does not contain the vertices themselves, which we indicate by writing $(a, b)$ instead of $[a, b]$. This convention has the consequence that if $d \in e$ is any point on the edge, then $d$ is not a vertex of the triangle. The interior is all the triangle except the vertices and the edges, in other words, the face of the triangle.
+
+A \emph{triangulation} of $\Omega$, denoted by $\tau$, is a set of triangles so that the interiors are disjoint and every point is in the closure of some triangle. A valid triangulation is one without slave nodes, which is defined as a vertex of one triangle that is on an edge of another triangle.
+
+A \emph{piecewise linear} $C_0$ function is a continuous function $\mathcal{R}^2 \to \mathcal{R}$ defined on $\Omega$, that is affine(linear) when restricted to any $T \in \tau$. Here by affine we mean there are constants so that $u(x, y) = \alpha x + \beta y + \gamma$. And by piecewise affine we mean that for every $T \in \tau$, there exist $\alpha_T$, $\beta_T$, $\gamma_T$ such that $u(x, y) = \alpha_Tx + \beta_Ty + \gamma_T, \forall (x, y) \in T$. The PLT space, denoted by $\mathcal{S}_{\tau}$, consists of all piecewise linear functions on $\tau$ that satisfy the Dirichlet boundary conditions.
