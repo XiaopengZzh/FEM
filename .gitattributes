@@ -1,0 +1,9 @@
+*.tex linguist-language=TeX
+
+* text=auto eol=lf
+*.bat text eol=crlf
+
+*.jpg binary
+*.pdf binary
+
+*.pdf linguist-vendored
