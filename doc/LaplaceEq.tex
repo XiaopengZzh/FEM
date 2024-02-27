@@ -181,8 +181,114 @@
 	
 	There are $n^2$ equations \eqref{FDM equation}, one for each interior grid point. There are also $n^2$ unknowns $U_{j, k}$. Thus the finite difference equations \eqref{FDM equation} are a system of linear equations. If the corresponding matrix is non-singular, then there is a unique solution $U$, which is the finite difference approximation to $u$.
 	
+	Without loss of generality, we will consider $\Delta x = \Delta y$ in the following sections.
+	
+	\begin{theorem}
+		The coefficient matrix $A$ derived from \eqref{FDM equation} is s.p.d.
+	\end{theorem}
+	
+	\begin{proof}
+		Consider a quadratic form
+		$$F(U) = \frac{1}{2}\sum_{j=0}^n\sum_{k=0}^n[(U_{j+1,k} - U_{jk})^2 + (U_{j,k+1} - U_{jk})^2]$$
+		
+		Note that $$\frac{ \partial F(U) }{\partial U_{lm}} = 4U_{lm} - (U_{l-1,m} + U_{l+1,m} + U_{l,m-1} + U_{l,m+1}) = (AU)_{lm}$$
+		Therefore, we have $\frac{ \partial F(U) }{\partial U} = AU$, which also means $F(U) = U^TAU$.
+		
+		Since $F(U) \geq 0$, we know that $A$ is a s.p.d matrix.
+	\end{proof}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	\section{Variational principle}
+	
+	A variational principle is a minimization problem so that $u$ or $U$ is the minimizer. 
+	
+	\subsection{For Laplace Equation}
+	
+	The Dirichlet variational principle for the inhomogeneous Laplace equation is 
+	\begin{equation}
+		\min_{u=g \text{ on } \Gamma} \frac{1}{2}\int_{\Omega}|\nabla u(x,y)|^2dxdy + \int_{\Omega}f(x,y)u(x,y)dxdy
+		\label{1_3VP}
+	\end{equation}
+	
+	This is a weak form of Laplace equation which means that a solution of Laplace equation is also a solution of \eqref{1_3VP} but inverse only holds in most cases.
+	
+	Dirichlet gave a simple argument and a rigorous argument was given by Hermann Weyl after almost a century.\\
+	
+	Define a functional as $$F(w) = \frac{1}{2}\int_{\Omega}|\nabla w(x,y)|^2dxdy + \int_{\Omega}f(x,y)w(x,y)dxdy$$
+	
+	Suppose $F(w)$ reaches its minimum at $w = u$, adding some perturbation$u \leftarrow u + \epsilon v$ onto $u$ will lead to lower the energy as long as $v = 0$ on $\Gamma$. That is $F(u + \epsilon v) > F(u)$
+	\begin{align*}
+	F(u + \epsilon v) =& F(u) + \epsilon \cdot [\int_{\Omega}\nabla u(x,y) \cdot \nabla v(x,y)dxdy + \int_{\Omega}f(x,y)v(x,y)dxdy ] \\
+	&+ \epsilon^2 \cdot \frac{1}{2}\int_{\Omega}| \nabla v(x,y) |^2dxdy
+	\end{align*}
+	
+	If we define $G(\epsilon) = F(u + \epsilon v)$, note that $G(\epsilon)$ reaches its minimum at $\epsilon = 0$ thus we have $G^{'}(0) = 0$, then $$\int_{\Omega}\nabla u(x,y) \cdot \nabla v(x,y)dxdy + \int_{\Omega}f(x,y)v(x,y)dxdy = 0$$ 
+	
+	By Gauss-Green theorem, if $v = 0$ on $\Gamma$, then $$ \int_{\Omega}\nabla u(x,y)\cdot \nabla v(x,y) dxdy = - \int_{\Omega} \Delta u(x,y) \cdot v(x,y)dxdy $$
+	
+	This yields another equivalent weak form of the Laplace equation, for every $v(x,y)$ that satisfies the Dirichlet boundary condition, we have 
+	\begin{equation}
+		\int_{\Omega}[ \Delta u(x,y) - f(x,y) ]v(x,y)dxdy = 0
+		\label{1_3secondWF}
+	\end{equation}
+	
+	The relationship of the Laplace equation and 2 weak forms are:$$(D) \rightarrow \eqref{1_3VP} \leftrightarrow \eqref{1_3secondWF}$$
+	
+	\subsection{For discrete Laplace equation}
+	
+	A natural discrete approximation of the integral $fu$ is 
+	\begin{equation}
+		\int_{\Omega}f(x,y)u(x,y)dxdy \approx \Delta x^2 \sum_{j=1}^n\sum_{k=1}^nf_{jk}U_{jk}
+	\end{equation}
+	
+	Note that $j$ and $k$ goes from 1 to $n$ instead of from 0 to $n+1$ because of the zero boundary condition.
+	
+	The discrete approximation of the Dirichlet integral is 
+	\begin{equation}
+		\frac{1}{2}\int_{\Omega}| \nabla u(x,y) |^2dxdy \approx \frac{1}{2}\sum_{j=0}^n\sum_{k=0}^n[(U_{j+1,k} - U_{jk})^2 + (U_{j,k+1} - U_{jk})^2]
+	\end{equation}
+	
+	\begin{theorem}[Discrete variational principle]
+		Discrete Laplace equation $AU = F$ holds if and only if\\
+		$$U = \min_{U}\frac{1}{2}\sum_{j=0}^n\sum_{k=0}^n [(U_{j+1,k} - U_{jk})^2 + (U_{j,k+1} - U_{jk})^2] - \Delta x^2 \sum_{j=1}^n\sum_{k=1}^nf_{jk}U_{jk}$$
+	\end{theorem}
+	
+	\begin{proof}
+		Define $F(U)$ as the finite sum to be minimized. Consider the overall derivative
+		$$\frac{ \partial F(U) }{\partial U_{lm}} = 4U_{lm} - (U_{l-1,m} + U_{l+1,m} + U_{l,m-1} + U_{l,m+1}) - \Delta x^2 \cdot f_{jk} = 0$$
+		
+		This is exactly the discrete version of Laplace equation.
+	\end{proof}
+	
+	\noindent\textbf{\textit{Remark1.}} In DVP, the latter term is with a minus sign while in variational principle of Laplace equation, the integral of $fv$ is with a positive sign.\\
+	
+	\noindent\textbf{\textit{Remark2.}} If we change $j$ and $k$ in the discrete approximation of Dirichlet integral to start from 1, the derivative at the boundary will not coincide with $AU = F$ then. Do be careful with the index during coding.
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Stability}
+	
+	Poincare inequality is basically saying that you cannot get a large function without a large gradient.
+	
+	\begin{theorem}[Poincare inequality] Let $\Omega$ be a bounded set and consider $L^p$ norm. There exists a constant $C_{\Omega, p}$, depending only on $\Omega$ and $p$. For any function $u$ of the Sobolev space $W_0^{1,p}(\Omega)$,$$\|u\|_{L^p(\Omega)} \leq C_{\Omega,p} \| \nabla u \|_{L^p(\Omega)}$$
+	\end{theorem}
+	
+	\noindent\textbf{\textit{Remark.}} $$\|u\|_{W_0^{1,p}(\Omega)} = (\sum_{|\alpha| \leq k}\int_{\Omega}|D^{\alpha}u(x)|^pdx)^{1/p}$$
+	with zero condition on the boundary.
+	
+	$$\int_{\Omega}u(x,y)^2dxdy \leq C \int_{\Omega}|\nabla u(x,y) |^2dxdy$$
+	
+	\begin{theorem}[Discrete Poincare inequality]
+		$$\Delta x^2 \sum_{j,k}U_{jk}^2 \leqslant C_{\Omega}\sum_{j,k}[(U_{j+1,k} - U_{j,k})^2 + (U_{j,k+1} - U_{j,k})^2]$$
+	\end{theorem}
+	
+	\begin{proof}
+		omit
+	\end{proof}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	\section{Gauss Seidel Method}
 	
