@@ -6,9 +6,12 @@ offset = resolution / 2
 scale = 200
 
 
-def writeToFile(frameNum, x):
+def writeToFile(filename, frameNum, x):
     if not os.path.exists('output'):
         os.makedirs('output')
+
+    with open(f"output/{filename}", 'a') as f:
+        f.write(f"{frameNum}\t{x[0]}\t{x[1]}\n")
 
 
 def generateUnitCircle(n):

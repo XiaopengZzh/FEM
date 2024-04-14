@@ -10,12 +10,15 @@ dt = 0.01
 recordInterval = 10
 # stepFunc = solver.oneTimestep_FEuler
 stepFunc = solver.oneTimestep_RK4
+filename = 'sim1.txt'
 
 x = odes.initUnitCircle()
 xT = odes.initUnitCircle()
 numSeg = 100
 uCircle = utils.generateUnitCircle(numSeg)
 
+with open(f"output/{filename}", 'w'):
+    pass
 
 running = True
 timestep = 0
@@ -27,6 +30,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    if timestep % recordInterval == 0:
+        utils.writeToFile(filename, timestep, x)
 
     screen.fill((255, 255, 255))
 
